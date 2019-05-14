@@ -21,8 +21,10 @@ if (userGuess === randomnumber) {
     lastResult.textContent = 'Congratulations you got it right';
     lastResult.style.backgroundColor = 'green';
     lowOrHi.textContent = ' ';
+    setGameOver();
 } else if (guessCount === 10) {
     lastResult.textContent = 'Game Over';
+    setGameOver();
 } else{
     lastResult.textContent = 'Wrong';
     lastResult.style.backgroundColor = 'red';
@@ -40,3 +42,31 @@ if (userGuess === randomnumber) {
 }
 
 guessSubmit.addEventListener('click',checkGuess);
+
+function setGameOver(){
+
+    guessField.disabled  = 'True';
+    guessSubmit.disabled = 'True';
+    resetButton = document.createElement('button');
+    resetButton.textContent = 'Start new Game';
+    document.body.appendChild(resetButton);
+    resetButton.addEventListener('click', resetGame);
+}
+
+function resetGame(){
+    guessCount = 1;
+    const resetParas = document.querySelectorAll('.resultParas p'); //it gives the paragraph and it's length it seems
+    for (let i = 0; i < resetParas.length; i++) {
+        resetParas[i].textContent = '';
+    }
+    resetButton.parentNode.removeChild(resetButton);
+    guessField.disabled = false;
+    guessSubmit.disabled = false;
+    guessField.value = '';
+    guessField.focus();
+//Clearing the contents
+    lastResult.textContent = '';
+    lastResult.style.backgroundColor = 'white';
+    guesses.textContent = '';
+    randomnumber = Math.floor(Math.random() * 100) + 1;
+}
